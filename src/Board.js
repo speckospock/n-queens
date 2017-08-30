@@ -79,27 +79,58 @@
     //
     // test if a specific row on this board contains a conflict
     hasRowConflictAt: function(rowIndex) {
-      return false; // fixme
+      // return false; // fixme
+      //reduce row to its sum
+      return this.get(rowIndex).reduce((sum, item) => {
+        return sum + item;
+      }) > 1;
+      //return sum > 1
     },
 
     // test if any rows on this board contain conflicts
     hasAnyRowConflicts: function() {
-      return false; // fixme
+      // return false; // fixme
+      return _.range(this.get('n')).reduce((wasFound, index) => {
+        return wasFound || this.hasRowConflictAt(index);
+      }, false);
     },
 
-
+    numPieces: function() {
+      return this.rows().reduce((memo, row) => {
+        return memo + row.reduce((memo2, col) => {
+          return memo2 + col;
+        }, 0);
+      }, 0);
+    },
 
     // COLUMNS - run from top to bottom
     // --------------------------------------------------------------
     //
+
+    //returns an array of a column in the board
+    getColumn: function(colIndex) {
+      return this.rows().map(row => {
+        return row[colIndex];
+      });
+    },
+    //returns an array of all columns
+    columns: function() {
+      return _.range(this.get('n')).map(col => {
+        return this.getColumn(col);
+      });
+    },
     // test if a specific column on this board contains a conflict
     hasColConflictAt: function(colIndex) {
-      return false; // fixme
+      return this.getColumn(colIndex).reduce((sum, item) => {
+        return sum + item;
+      }) > 1;
     },
 
     // test if any columns on this board contain conflicts
     hasAnyColConflicts: function() {
-      return false; // fixme
+      return _.range(this.get('n')).reduce((wasFound, index) => {
+        return wasFound || this.hasColConflictAt(index);
+      }, false);
     },
 
 
