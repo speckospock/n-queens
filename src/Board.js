@@ -96,11 +96,17 @@
     },
 
     numPieces: function() {
-      return this.rows().reduce((memo, row) => {
-        return memo + row.reduce((memo2, col) => {
-          return memo2 + col;
+      if (this.get('n') === 0) {
+        return 0;
+      } else if (this.get('n') === 1) {
+        return this.get(0)[0];
+      } else {
+        return this.rows().reduce((memo, row) => {
+          return memo + row.reduce((memo2, col) => {
+            return memo2 + col;
+          }, 0);
         }, 0);
-      }, 0);
+      }
     },
 
     // COLUMNS - run from top to bottom
