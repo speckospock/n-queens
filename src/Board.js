@@ -140,12 +140,25 @@
     //
     // test if a specific major diagonal on this board contains a conflict
     hasMajorDiagonalConflictAt: function(majorDiagonalColumnIndexAtFirstRow) {
-      return false; // fixme
+      // return false; // fixme
+      var total = 0;
+      //start at row 0, column majorDiagonalColumnIndexAtFirstRow
+      for (var i = 0; i < this.get('n'); i++) {
+        if (this._isInBounds(i, majorDiagonalColumnIndexAtFirstRow + i)) {
+          total += this.get(i[majorDiagonalColumnIndexAtFirstRow + i]);
+        }
+      }
+      //iterate "if valid board position" -> add value at that position to total
+
+      //return total > 1
+      return total > 1;
     },
 
     // test if any major diagonals on this board contain conflicts
     hasAnyMajorDiagonalConflicts: function() {
-      return false; // fixme
+      return _.range(((this.get('n')-1) * -1),(this.get('n')-1)).reduce((memo, diag) => {
+        return memo || this.hasMajorDiagonalConflictAt(diag);
+      }, false);
     },
 
 
