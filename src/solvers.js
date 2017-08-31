@@ -18,18 +18,24 @@
 window.findNRooksSolution = function(n) {
   var solution = new Board({'n': n});
 
-  var helper = (row = 0, col = 0, pieces = n) => {
-    if (pieces > 0) {
-      solution.togglePiece(row++, col++);
-      // row++;
-      // col++;
-      helper(row, col, --pieces);
-    }
-  };
+  //set up an identity matrix (which will ALWAYS be a valid nRooks solution)
+  for (var i = 0; i < n; i++) {
+    solution.togglePiece(i, i);
+  }
 
-  helper();
+  // var helper = (row = 0, col = 0, pieces = n) => {
+  //   if (pieces > 0) {
+  //     solution.togglePiece(row++, col++);
+  //     // row++;
+  //     // col++;
+  //     helper(row, col, --pieces);
+  //   }
+  // };
+  //
+  // helper();
 
   console.log('Single solution for ' + n + ' rooks:', JSON.stringify(solution));
+  //return the identity matrix
   return solution;
 };
 
