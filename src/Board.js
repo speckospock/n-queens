@@ -140,17 +140,20 @@
     //
     // test if a specific major diagonal on this board contains a conflict
     hasMajorDiagonalConflictAt: function(majorDiagonalColumnIndexAtFirstRow) {
-      // return false; // fixme
+      //set our variables
+      var majDiagIndex = majorDiagonalColumnIndexAtFirstRow;
       var total = 0;
-      //start at row 0, column majorDiagonalColumnIndexAtFirstRow
+
+      //start at row 0, column majDiagIndex
+      //iterate through
       for (var i = 0; i < this.get('n'); i++) {
-        if (this._isInBounds(i, majorDiagonalColumnIndexAtFirstRow + i)) {
-          total += this.get(i[majorDiagonalColumnIndexAtFirstRow + i]);
+        //  check if the location is on the board
+        if (this._isInBounds(i, majDiagIndex + i)) {
+          //if so, add the value at the current position to the running total
+          total += this.get(i)[majDiagIndex + i];
         }
       }
-      //iterate "if valid board position" -> add value at that position to total
-
-      //return total > 1
+      //if the total > 1, we know there's a conflict: return true
       return total > 1;
     },
 
@@ -168,7 +171,18 @@
     //
     // test if a specific minor diagonal on this board contains a conflict
     hasMinorDiagonalConflictAt: function(minorDiagonalColumnIndexAtFirstRow) {
-      return false; // fixme
+      // return false; // fixme
+      var minDiagIndex = minorDiagonalColumnIndexAtFirstRow;
+      var total = 0;
+
+      for (var i = 0; i < this.get('n'); i++) {
+        //check if it exists
+        if (this._isInBounds(i, minDiagIndex - i)) {
+          total += this.get(i)[minDiagIndex - i];
+        }
+      }
+
+      return total > 1;
     },
 
     // test if any minor diagonals on this board contain conflicts
