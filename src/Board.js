@@ -159,6 +159,8 @@
 
     // test if any major diagonals on this board contain conflicts
     hasAnyMajorDiagonalConflicts: function() {
+      //take range of all major diag start indeces, check each diagonal
+      //return true if there are conflicts along any diagonals, else return false
       return _.range(((this.get('n')-1) * -1),(this.get('n')-1)).reduce((memo, diag) => {
         return memo || this.hasMajorDiagonalConflictAt(diag);
       }, false);
@@ -187,8 +189,11 @@
 
     // test if any minor diagonals on this board contain conflicts
     hasAnyMinorDiagonalConflicts: function() {
-      return false; // fixme
-    }
+      // return false; // fixme
+      return _.range(0, (2 * (this.get('n') - 1))).reduce((memo, diag) => {
+        return memo || this.hasMinorDiagonalConflictAt(diag);
+      }, false);
+    },
 
     /*--------------------  End of Helper Functions  ---------------------*/
 
