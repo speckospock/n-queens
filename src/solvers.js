@@ -67,8 +67,11 @@ window.findNQueensSolution = function(n) {
       solution.togglePiece(0, 0);
     }
   }
+  if (n > 1 && n < 4) {
+    solution = new Board({'n': n});
+  }
   //for n > 3, there will be at least one solved board.
-  if (n > 3) {
+  if (n > 3 && n < 8) {
 
     //build identity matrix, using findNRooksSolution
     var identity = window.findNRooksSolution(n);
@@ -133,9 +136,34 @@ window.findNQueensSolution = function(n) {
         //if not a valid space, goto 1
         //if is valid space, out of bounds, start at beginning of current row and place a queen at the next valid spot
       //3. return the solved board
+  if (n === 8) {
+    var eightBoard = new Board({'n': 8});
+    //place a queen at 0,1
+    var j = 2;
+    for (var i = 0; i < 4; i++) {
+      eightBoard.togglePiece(i, j);
+      j += 2;
+      if (j >= n) {
+        j -= n;
+      }
+    }
+    j = 3;
+    for(var i = 4; i < n; i++) {
+      eightBoard.togglePiece(i, j);
+      j -= 2;
+      if (j < 0) {
+        j += n;
+      }
+    }
+    //knight move down 1 and to the right 2
+      //place queen at that spot
+    //when 4th row is reached, start at 5th row, pick first valid spot
+      //place queen at that spot
+    //knight move down 1 and to the left 2
+      //wrap at first move to accomodate for edge
+  }
 
-
-  return solution;
+  return solution || eightBoard;
 };
 
 // return the number of nxn chessboards that exist, with n queens placed such that none of them can attack each other

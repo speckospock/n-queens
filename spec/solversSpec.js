@@ -50,14 +50,14 @@ describe('solvers', function() {
 
       // Check 2 and 3 for no solution
       [2, 3].map(function (n) {
-        var solutionBoard = new Board(findNQueensSolution(n));
+        var solutionBoard = findNQueensSolution(n);
         var numPieces = _.reduce(solutionBoard.rows(), function(memo, row) {
           return memo + _.reduce(row, function(memo, col) {
             return memo + col;
           }, 0);
         }, 0);
-
-        expect(numPieces).to.equal(0);
+        //debugger;
+        expect(solutionBoard.numPieces()).to.equal(0);
         expect(solutionBoard.get('n')).to.equal(n);
       });
     });
