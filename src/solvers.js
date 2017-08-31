@@ -18,7 +18,7 @@
 window.findNRooksSolution = function(n) {
   var solution = new Board({'n': n});
 
-  //set up an identity matrix (which will ALWAYS be a valid nRooks solution)
+  //set up an identity matrix (which will ALWAYS be a valid nRooks solution )
   for (var i = 0; i < n; i++) {
     solution.togglePiece(i, i);
   }
@@ -69,23 +69,54 @@ window.findNQueensSolution = function(n) {
   }
   //for n > 3, there will be at least one solved board.
   if (n > 3) {
-    var queenBoard = new Board({'n': n});
-    //if n is odd:
-    if (!!(n % 2)) {
-      //1. place a queen at 0, 0
-      var colIndex = 2;
-      queenBoard.togglePiece(0, 0);
-      for (var rowIndex = 1; rowIndex < n; rowIndex++) {
-        // var rowIndex = 0;
-        if (!(queenBoard._isInBounds(rowIndex, colIndex))) {
-          colIndex -= n;
-        }
-        queenBoard.togglePiece(rowIndex, colIndex);
-        colIndex += 2;
+
+    //build identity matrix, using findNRooksSolution
+    var identity = window.findNRooksSolution(n);
+
+    //create a range from 0 -> n-1
+    var ref = _.range(n);
+
+    //create an evens array
+    var evens = [];
+    //create an odds array
+    //join them
+    var odds = ref.filter((ele) => {
+      if (!(ele % 2)) { //if ele is even
+        evens.push(ele);
       }
-      console.log('Single solution for ' + n + ' queens:', JSON.stringify(queenBoard));
-      return queenBoard;
+      return !!(ele % 2); //returns true if ele is odd, false if even
+    });
+    //if n is odd, move all even numbers in range to the front, odd to back
+    if (!!(n % 2)) {
+      ref = evens.concat(odds);
+    } else { //if n is even, do opposite: odd numbers to front, even to back
+      ref = odds.concat(evens);
     }
+
+    var solution = new Board({'n': n});
+    //map to the identity matrix according to that list
+    ref.map((item, index) => {
+      solution.set(index, identity.get(item));
+    });
+
+    //return the mapped board
+
+    // var queenBoard = new Board({'n': n});
+    // //if n is odd:
+    // if (!!(n % 2)) {
+    //   //1. place a queen at 0, 0
+    //   var colIndex = 2;
+    //   queenBoard.togglePiece(0, 0);
+    //   for (var rowIndex = 1; rowIndex < n; rowIndex++) {
+    //     // var rowIndex = 0;
+    //     if (!(queenBoard._isInBounds(rowIndex, colIndex))) {
+    //       colIndex -= n;
+    //     }
+    //     queenBoard.togglePiece(rowIndex, colIndex);
+    //     colIndex += 2;
+    //   }
+    //   console.log('Single solution for ' + n + ' queens:', JSON.stringify(queenBoard));
+    //   return queenBoard;
   }
       //2. add 2 to colIndex and 1 to rowIndex
         // colIndex += 2;
