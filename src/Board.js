@@ -161,12 +161,10 @@
     hasAnyMajorDiagonalConflicts: function() {
       //take range of all major diag start indeces, check each diagonal
       //return true if there are conflicts along any diagonals, else return false
-      return _.range(((this.get('n')-1) * -1),(this.get('n')-1)).reduce((memo, diag) => {
+      return _.range(((this.get('n') - 1) * (-1)), (this.get('n') - 1)).reduce((memo, diag) => {
         return memo || this.hasMajorDiagonalConflictAt(diag);
       }, false);
     },
-
-
 
     // Minor Diagonals - go from top-right to bottom-left
     // --------------------------------------------------------------
