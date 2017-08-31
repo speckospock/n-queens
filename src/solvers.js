@@ -53,7 +53,7 @@ window.findNQueensSolution = function(n) {
     //n = 1: one queen at [0, 0]
     //n = 2: no solution
     //n = 3: no solution
-  if(n <= 1) {
+  if (n <= 1) {
     if (n === 0) {
       solution = new Board({'n': 0});
     } else {
