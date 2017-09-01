@@ -76,7 +76,7 @@ window.findNQueensSolution = function(n) {
     //build identity matrix, using findNRooksSolution
     var identity = window.findNRooksSolution(n);
 
-    //create a range from 0 -> n-1
+    //create a range from 0 -> n
     var ref = _.range(n);
 
     //create an evens array
@@ -168,7 +168,30 @@ window.findNQueensSolution = function(n) {
 
 // return the number of nxn chessboards that exist, with n queens placed such that none of them can attack each other
 window.countNQueensSolutions = function(n) {
-  var solutionCount = undefined; //fixme
+  var solutionCount = 0; //fixme
+  var countQBoard = new Board({'n': n});
+  //helper function that accepts param 'row', iterate through each row
+  var helper = (row) => {
+    //base-case row === n
+      //if triggered, increment solutionCount
+    if (row === n) {
+      solutionCount++;
+      return;
+    }
+    //iterate through each column
+    for (var i = 0; i < n; i++) {
+      //place a piece at Board[row, column]
+      countQBoard.togglePiece(row, i);
+      //check for conflicts
+        //if not, call helper(row+1)
+      if(!countQBoard.hasAnyQueensConflicts()) {
+        helper(row + 1);
+      }
+      countQBoard.togglePiece(row, i);
+    }
+  };
+
+  helper(0);
 
   console.log('Number of solutions for ' + n + ' queens:', solutionCount);
   return solutionCount;
