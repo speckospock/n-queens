@@ -79,17 +79,14 @@
     //
     // test if a specific row on this board contains a conflict
     hasRowConflictAt: function(rowIndex) {
-      // return false; // fixme
       //reduce row to its sum
       return this.get(rowIndex).reduce((sum, item) => {
         return sum + item;
       }) > 1;
-      //return sum > 1
     },
 
     // test if any rows on this board contain conflicts
     hasAnyRowConflicts: function() {
-      // return false; // fixme
       return _.range(this.get('n')).reduce((wasFound, index) => {
         return wasFound || this.hasRowConflictAt(index);
       }, false);
@@ -177,7 +174,6 @@
     //
     // test if a specific minor diagonal on this board contains a conflict
     hasMinorDiagonalConflictAt: function(minorDiagonalColumnIndexAtFirstRow) {
-      // return false; // fixme
       var minDiagIndex = minorDiagonalColumnIndexAtFirstRow;
       var total = 0;
 
@@ -193,7 +189,6 @@
 
     // test if any minor diagonals on this board contain conflicts
     hasAnyMinorDiagonalConflicts: function() {
-      // return false; // fixme
       return _.range(0, (2 * (this.get('n') - 1))).reduce((memo, diag) => {
         return memo || this.hasMinorDiagonalConflictAt(diag);
       }, false);

@@ -23,17 +23,6 @@ window.findNRooksSolution = function(n) {
     solution.togglePiece(i, i);
   }
 
-  // var helper = (row = 0, col = 0, pieces = n) => {
-  //   if (pieces > 0) {
-  //     solution.togglePiece(row++, col++);
-  //     // row++;
-  //     // col++;
-  //     helper(row, col, --pieces);
-  //   }
-  // };
-  //
-  // helper();
-
   console.log('Single solution for ' + n + ' rooks:', JSON.stringify(solution));
   //return the identity matrix
   return solution;
@@ -104,32 +93,23 @@ window.findNQueensSolution = function(n) {
 
     //return the mapped board
 
-    // var queenBoard = new Board({'n': n});
+    /*We attempted to implement a very mathmatically-complex algorithm using linear
+    algebra; however, we did not test enough cases to realize it wasn't universally
+    applicable. Our piecemeal funcion above reflects duct-taping that algorithm with
+    some known-good methods of solving the edge cases. We are working on a universally
+    applicable algorithm in the lab.*/
+
     // //if n is odd:
-    // if (!!(n % 2)) {
     //   //1. place a queen at 0, 0
-    //   var colIndex = 2;
-    //   queenBoard.togglePiece(0, 0);
-    //   for (var rowIndex = 1; rowIndex < n; rowIndex++) {
-    //     // var rowIndex = 0;
-    //     if (!(queenBoard._isInBounds(rowIndex, colIndex))) {
-    //       colIndex -= n;
-    //     }
-    //     queenBoard.togglePiece(rowIndex, colIndex);
-    //     colIndex += 2;
-    //   }
-    //   console.log('Single solution for ' + n + ' queens:', JSON.stringify(queenBoard));
-    //   return queenBoard;
+      //console.log('Single solution for ' + n + ' queens:', JSON.stringify(queenBoard));
   }
       //2. add 2 to colIndex and 1 to rowIndex
         // colIndex += 2;
         // rowindex ++;
         //if it's a valid space, place queen, goto 2
-
         //if not: goto 1
       //3. return the solved Board
     //if n is even:
-
       //1. pick a start point, place a queen,
       //2. add 2 to colIndex and 1 to rowIndex
         //if it's a valid space and within bounds, place queen
@@ -148,7 +128,7 @@ window.findNQueensSolution = function(n) {
       }
     }
     j = 3;
-    for(var i = 4; i < n; i++) {
+    for (var i = 4; i < n; i++) {
       eightBoard.togglePiece(i, j);
       j -= 2;
       if (j < 0) {
@@ -184,7 +164,7 @@ window.countNQueensSolutions = function(n) {
       countQBoard.togglePiece(row, i);
       //check for conflicts
         //if not, call helper(row+1)
-      if(!countQBoard.hasAnyQueensConflicts()) {
+      if (!countQBoard.hasAnyQueensConflicts()) {
         helper(row + 1);
       }
       countQBoard.togglePiece(row, i);
